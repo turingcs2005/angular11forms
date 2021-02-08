@@ -1,0 +1,10 @@
+<mat-toolbar color="primary" class="between mat-elevation-z8">
+    <div><mat-icon [matMenuTriggerFor]="topMenu">menu</mat-icon></div>
+    <div>Angular 11 Demo</div>
+    <div><mat-icon [routerLink]="['/home']">home</mat-icon></div>
+</mat-toolbar>
+
+<mat-menu #topMenu>
+    <menu mat-menu-item [routerLink]="['/home']"><mat-icon>home</mat-icon></menu>
+    <menu mat-menu-item [routerLink]="['/forms']">Forms</menu>
+</mat-menu>
