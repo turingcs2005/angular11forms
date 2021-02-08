@@ -1,0 +1,62 @@
+<div class="center">
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="name" formControlName="name" required>
+        </mat-form-field>
+        <br>
+
+        <!-- Add a store -->
+        <button mat-raised-button color="primary" type="button" (click)="addStore()"><mat-icon>add</mat-icon></button>
+        <br><br>
+
+        <div *ngIf="myForm.get('stores')['controls'].length > 0" formArrayName="stores">
+            <div class="mat-h2">stores</div>
+
+            <!-- Array of stores -->
+            <div *ngFor="let s of myForm.get('stores')['controls']; let i=index;" [formGroupName]="i">
+                <span>Store # {{ i + 1 }}</span> &nbsp; &nbsp;
+
+                <!-- Remove a store -->
+                <button mat-raised-button color="primary" type="button" (click)="removeStore()"><mat-icon>delete</mat-icon></button> &nbsp; &nbsp;
+                
+                <mat-form-field appearance="outline">
+                    <mat-label>Store name</mat-label>
+                    <input matInput placeholder="store name" formControlName="storeName" required>
+                </mat-form-field><br>
+                
+                <!-- Add an order -->
+                <button mat-raised-button color="accent" type="button" (click)="addOrder(s.get('orders'))"><mat-icon>add</mat-icon></button>
+                <br><br>
+
+                <!-- Array of orders -->
+                <div *ngIf="s.get('orders')['controls'].length > 0" formArrayName="orders" class="left-padded">
+                    <div class="mat-h3">orders</div>
+
+                    <!-- Array of orders -->
+                    <div *ngFor="let o of s.get('orders')['controls']; let j=index;" [formGroupName]="j">
+                        <span>Order # {{ j + 1 }}</span>&nbsp; &nbsp;
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Item</mat-label>
+                            <input matInput required placeholder="item" formControlName="item"> 
+                        </mat-form-field>&nbsp; &nbsp;
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Price</mat-label>
+                            <input matInput required placeholder="price" formControlName="price"> 
+                        </mat-form-field> &nbsp; &nbsp;
+                        <!-- Remove an order -->
+                        <button mat-raised-button color="accent" type="button" (click)="removeOrder(s.get('orders'), j)"><mat-icon>delete</mat-icon></button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        
+        <br>
+        <!-- Submit form -->
+        <button mat-raised-button color="accent" type="submit" [disabled]="!myForm.valid">Submit</button>
+    </form>
+</div>
