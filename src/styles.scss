@@ -35,3 +35,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .left-padded {
     padding: 0 0 0 40px;
 }
+
+.bold {
+    font-weight: bold;
+}
+
+.warn {
+    @extend .bold;
+    color: darkred;
+}
+
+.emphasis {
+    @extend .bold;
+    color: $primary900;
+}

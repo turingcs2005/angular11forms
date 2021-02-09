@@ -9,14 +9,13 @@ import { formObj } from './models';
 export class FormClassComponent implements OnInit {
 
   formObj = formObj;
-  myForm = formObj.myForm;
   constructor() { }
 
   ngOnInit(): void {
   }
 
   onSubmit() {
-    console.log(this.myForm.value);
+    console.log(this.formObj.myForm.value);
     console.log('Form submitted!');
   }
 

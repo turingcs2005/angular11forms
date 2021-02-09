@@ -1,4 +1,4 @@
-<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="formObj.myForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="outline">
         <mat-label>name</mat-label>
         <input matInput required placeholder="name" formControlName="name">
@@ -27,7 +27,7 @@
             </button>
 
             <!-- List of purchases -->
-            <div formArrayName="purchases" *ngIf="s.get('purchases').length > 0">
+            <div formArrayName="purchases" *ngIf="s.get('purchases').length > 0" class="left-padded">
                 <div *ngFor="let p of s.get('purchases').controls; let j=index" [formGroupName]="j">
                     <span>Purchase # {{j + 1}}</span> &nbsp; &nbsp;
                     <button mat-raised-button type="button" color="primary" (click)="formObj.removePurchase(s.get('purchases'), j)">
@@ -43,11 +43,13 @@
                         <input matInput type="text" placeholder="price" formControlName="price">
                     </mat-form-field>
                 </div>
-            </div><br>
+            </div>
 
-        </div><br>
+        </div>
     </div><br>
 
-    <button mat-raised-button color="accent" type="button" (click)="onSubmit()" [disabled]="!myForm.valid">Submit</button>
+    <button mat-raised-button color="accent" type="button" (click)="onSubmit()" [disabled]="!formObj.formIsValid()">Submit</button>
     
-</form>
+</form><br>
+
+<div>Total purchase: <span [class]="formObj.overbudget() ? 'warn' : 'emphasis'">{{ formObj.sumUpPurchases() | currency: 'USD':'symbol':'1.0-1' }}</span></div>

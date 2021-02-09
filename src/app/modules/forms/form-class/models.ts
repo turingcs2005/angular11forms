@@ -1,4 +1,4 @@
-import { FormControl, FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormArray, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { AbstractConstructor } from '@angular/material/core/common-behaviors/constructor';
 
 const fb = new FormBuilder();
@@ -34,5 +34,26 @@ export const formObj = {
 
     removePurchase: function(p: FormArray, i: number) {
         p.removeAt(i);
+    },
+
+    sumUpPurchases() {
+        let total = 0;
+        for (const s of this.stores.controls) {
+            for (const p of s.get('purchases')['controls']) {
+                total += parseInt(p.get('price').value, 10);
+            }
+        }
+
+        return total;
+    },
+
+    overbudget(budget: number = 100): boolean {
+        return this.sumUpPurchases() > budget;
+    },
+
+    formIsValid(): boolean {
+        return (this.myForm.valid) && (!this.overbudget());
     }
+
+
 }
