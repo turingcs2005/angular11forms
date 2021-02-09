@@ -36,12 +36,18 @@ export const formObj = {
         p.removeAt(i);
     },
 
+    sumUpStorePurchases(purchases: FormArray) {
+        let total = 0;
+        for (const p of purchases.controls) {
+            total += parseInt(p.get('price').value, 10);
+        }
+        return total;
+    },
+
     sumUpPurchases() {
         let total = 0;
         for (const s of this.stores.controls) {
-            for (const p of s.get('purchases')['controls']) {
-                total += parseInt(p.get('price').value, 10);
-            }
+            total += this.sumUpStorePurchases(s.get('purchases'));
         }
 
         return total;

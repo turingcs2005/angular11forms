@@ -52,4 +52,4 @@
     
 </form><br>
 
-<div>Total purchase: <span [class]="formObj.overbudget() ? 'warn' : 'emphasis'">{{ formObj.sumUpPurchases() | currency: 'USD':'symbol':'1.0-1' }}</span></div>
+<div>Maximum purchase allowed: <span class="emphasis">$100</span>. Total purchase: <span [class]="formObj.overbudget() ? 'warn' : 'emphasis'">{{ formObj.sumUpPurchases() | currency: 'USD':'symbol':'1.0-1' }}</span></div>
