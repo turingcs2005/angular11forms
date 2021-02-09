@@ -1,0 +1,53 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+        <mat-label>name</mat-label>
+        <input matInput required placeholder="name" formControlName="name">
+    </mat-form-field> &nbsp; &nbsp;
+
+    <!-- Add a store -->
+    <button mat-raised-button type="button" color="accent" (click)="formObj.addStore()">
+        <mat-icon matTooltip="add a store">add</mat-icon>
+    </button>
+
+    <!-- List of stores -->
+    <div formArrayName="stores" *ngIf="formObj.stores.length > 0">
+        <div *ngFor="let s of formObj.stores.controls; let i=index" [formGroupName]="i">
+            <div>
+                <span>Store # {{i + 1}}</span> &nbsp; &nbsp; 
+                <button mat-raised-button type="button" color="accent" (click)="formObj.removeStore(i)"><mat-icon>delete</mat-icon></button>
+            </div>
+            <mat-form-field appearance="outline">
+                <mat-label>Store name</mat-label>
+                <input type="text" matInput placeholder="store name" formControlName="storeName">
+            </mat-form-field><br>
+
+            <!-- Add a purchase -->
+            <button mat-raised-button type="button" color="primary" (click)="formObj.addPurchase(s.get('purchases'))">
+                <mat-icon>add</mat-icon>
+            </button>
+
+            <!-- List of purchases -->
+            <div formArrayName="purchases" *ngIf="s.get('purchases').length > 0">
+                <div *ngFor="let p of s.get('purchases').controls; let j=index" [formGroupName]="j">
+                    <span>Purchase # {{j + 1}}</span> &nbsp; &nbsp;
+                    <button mat-raised-button type="button" color="primary" (click)="formObj.removePurchase(s.get('purchases'), j)">
+                        <mat-icon>delete</mat-icon>
+                    </button> &nbsp; &nbsp;
+                    <mat-form-field appearance="outline">
+                        <mat-label>Item</mat-label>
+                        <input matInput type="text" placeholder="item" formControlName="item">
+                    </mat-form-field>&nbsp; &nbsp;
+                    
+                    <mat-form-field appearance="outline">
+                        <mat-label>Price</mat-label>
+                        <input matInput type="text" placeholder="price" formControlName="price">
+                    </mat-form-field>
+                </div>
+            </div><br>
+
+        </div><br>
+    </div><br>
+
+    <button mat-raised-button color="accent" type="button" (click)="onSubmit()" [disabled]="!myForm.valid">Submit</button>
+    
+</form>
