@@ -36,20 +36,19 @@ export const formObj = {
     },
 
     sumUpStorePurchases(purchases: FormArray) {
-        let total = 0;
-        for (const p of purchases.controls) {
-            total += parseInt(p.get('price').value, 10);
+        if (purchases.controls.length > 0) {
+            return purchases.controls.map(x => parseInt(x.get('price').value)).reduce( (a, b) =>  a + b );
+        } else {
+            return 0;
         }
-        return total;
     },
 
     sumUpPurchases() {
-        let total = 0;
-        for (const s of this.stores.controls) {
-            total += this.sumUpStorePurchases(s.get('purchases'));
+        if (this.stores.controls.length > 0) {
+            return this.stores.controls.map(x => this.sumUpStorePurchases(x.get('purchases'))).reduce( (a, b) => a + b);
+        } else {
+            return 0;
         }
-
-        return total;
     },
 
     overbudget(budget: number = 100): boolean {
